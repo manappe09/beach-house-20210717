@@ -7,31 +7,44 @@
 
         <title>@yield('title') | エンジニアのための海の家</title>
 
-        <link rel="stylesheet" href="{{ url('style.css') }}">
+        <link rel="stylesheet" href="{{ url('css/app.css') }}">
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
     </head>
     <body>
-      <nav>
-        <ul>
-            <li>
-                <a href="{{ route("top") }}">トップへ</a>
-                <a href="{{ route("ice") }}">かき氷ページへ</a>
-                <a href="{{ route("menu") }}">メニュー</a>
-                <a href="{{ route("about") }}">このサイトについて</a>
-            </li>
-        </ul>
-      </nav>
-      <aside>
-        @section('sidenav')
-            @component('components.sidenav')
-            @endcomponent
-        @show
-      </aside>
       <main class="main">
-        @section('main')
-            
-        @show
+        <header class="header">
+          <h1 class="header__title"><span>ようこそ！</span><br>エンジニアのための海の家</h1>
+          <nav class="gnav">
+            <ul class="gnav__list">
+                <li class="gnav__item">
+                    <a href="{{ route("top") }}">トップへ</a>
+                </li>
+                <li class="gnav__item">
+                    <a href="{{ route("ice") }}">かき氷ページへ</a>
+                </li>
+                <li class="gnav__item">
+                    <a href="{{ route("menu") }}">メニュー</a>
+                </li>
+                <li class="gnav__item">
+                    <a href="{{ route("about") }}">このサイトについて</a>
+                </li>
+            </ul>
+          </nav>
+        </header>
+        <div class="contents_area">
+          <aside class="sidenav">
+            @section('sidenav')
+                @component('components.sidenav')
+                @endcomponent
+            @show
+          </aside>
+          <div class="contents">
+            @section('main')
+                
+            @show
+          </div>
+        </div>
       </main>
       <script src="{{ asset('/js/app.js') }}"></script>
     </body>

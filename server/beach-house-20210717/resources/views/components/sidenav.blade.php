@@ -1,4 +1,4 @@
-<nav class="sidenav">
+<nav>
   <div class="sidenav__ice">
     <ul>
       <li>かき氷の商品が並びます</li>

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProductsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,9 +13,16 @@
 |
 */
 
+// Route::get('/', [ProductsController::class, 'index'])
+//     ->name('top');
+
 Route::get('/', function () {
     return view('top');
 }) -> name('top');
+
+// Route::resource('top', 'ProductsController', ['only' => [
+//     'index'
+// ]]);
 
 Route::get('/ice', function () {
     return view('ice');
