@@ -55,3 +55,27 @@ ul {
   margin-left: 1rem;
 }
 
+.ice__list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.ice__item + .ice__item {
+  margin-left: 2rem;
+}
+
+.ice__item label {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer;
+  -webkit-transition: opacity .2s;
+  transition: opacity .2s;
+}
+
+.ice__item label:hover {
+  opacity: .5;
+}
+

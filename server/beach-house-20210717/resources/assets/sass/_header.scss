@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  height: 200px;
+}
+
+.gnav {
+  display: block;
+}
+
+.gnav__list {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.gnav__item {
+  & + & {
+    margin-left: 1rem;
+  }
+}

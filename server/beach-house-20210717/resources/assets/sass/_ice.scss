@@ -1,0 +1,17 @@
+.ice__list {
+  display: flex;
+}
+
+.ice__item {
+  & + & {
+    margin-left: 2rem;
+  }
+  label {
+    user-select: none;
+    cursor: pointer;
+    transition: opacity .2s;
+    &:hover {
+      opacity: .5;
+    }
+  }
+}
