@@ -1098,6 +1098,7 @@ window.Vue = __webpack_require__(36);
 
 Vue.component('example-component', __webpack_require__(40));
 Vue.component('hello', __webpack_require__(43));
+Vue.component('ice-upsell', __webpack_require__(51));
 
 var app = new Vue({
   el: '#app'
@@ -45279,6 +45280,257 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(52)
+/* template */
+var __vue_template__ = __webpack_require__(53)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Ice.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4fc65da4", Component.options)
+  } else {
+    hotAPI.reload("data-v-4fc65da4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 52 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  // props: {
+  //   products: Array
+  // },
+  data: function data() {
+    return {
+      products: [],
+      selectedIceLists: [],
+      isIncludedBluehawaii: false
+    };
+  },
+  mounted: function mounted() {
+    this.products = products;
+    console.log(this.products);
+    console.log(this.products.K01);
+  },
+
+  watch: {
+    selectedIceLists: function selectedIceLists() {
+      console.log('リストが更新されました');
+      this.isIncludedBluehawaii = this.checkIncludeOneProduct(this.selectedIceLists, 'ブルーハワイ');
+    }
+  },
+  methods: {
+    checkIncludeOneProduct: function checkIncludeOneProduct(array, product) {
+      return array.includes(product);
+    }
+  }
+  // mounted() {
+  //   console.log(this.products);
+  //   console.log(this.products.K01);
+  //   console.log(this.products[0]);
+  // }
+});
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "ice__wrapper" }, [
+    _c("h3", [_vm._v("かき氷")]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c(
+      "ul",
+      { staticClass: "ice__list" },
+      _vm._l(_vm.products, function(product, key) {
+        return _c("li", { key: key, staticClass: "ice__item" }, [
+          _c("img", {
+            attrs: {
+              src: "/images/" + product.image,
+              alt: "",
+              width: "150",
+              height: "200"
+            }
+          }),
+          _c("br"),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.selectedIceLists,
+                expression: "selectedIceLists"
+              }
+            ],
+            attrs: { id: key, type: "checkbox" },
+            domProps: {
+              value: product.name,
+              checked: Array.isArray(_vm.selectedIceLists)
+                ? _vm._i(_vm.selectedIceLists, product.name) > -1
+                : _vm.selectedIceLists
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.selectedIceLists,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = product.name,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.selectedIceLists = $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      (_vm.selectedIceLists = $$a
+                        .slice(0, $$i)
+                        .concat($$a.slice($$i + 1)))
+                  }
+                } else {
+                  _vm.selectedIceLists = $$c
+                }
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { for: key } }, [_vm._v(_vm._s(product.name))]),
+          _vm._v(" "),
+          _c("p", [_c("small", [_vm._v(_vm._s(product.text))])])
+        ])
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "ice__selected" }, [
+      _vm._v(
+        "\n  選択されたかき氷のリスト： " +
+          _vm._s(_vm.selectedIceLists) +
+          "\n  "
+      ),
+      _c("br"),
+      _vm._v(
+        "\n  この中にブルーハワイは含まれてる？ => " +
+          _vm._s(_vm.isIncludedBluehawaii) +
+          "\n"
+      )
+    ]),
+    _vm._v(" "),
+    _c("h4", [_vm._v("ご一緒にこちらもいかがですか？")]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _vm._m(0)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", { staticClass: "ice__list" }, [
+      _c("li", { staticClass: "ice__item" }, [
+        _c("img", {
+          attrs: {
+            src: "/images/miffy.jpg",
+            alt: "",
+            width: "150",
+            height: "200"
+          }
+        }),
+        _c("br")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4fc65da4", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

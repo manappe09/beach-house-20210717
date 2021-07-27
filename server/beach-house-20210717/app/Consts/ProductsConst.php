@@ -6,7 +6,7 @@ class ProductsConst
 {
   const demo = 'this is demo';
 
-  const ID_BLUEHAWAI = 'K01';
+  const ID_BLUEHAWAII = 'K01';
   const ID_STRAWBERRY = 'K02';
   const ID_MELLON = 'K03';
 

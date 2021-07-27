@@ -17,6 +17,7 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('hello', require('./components/Hello.vue'));
+Vue.component('ice-upsell', require('./components/Ice.vue'));
 
 const app = new Vue({
     el: '#app'
