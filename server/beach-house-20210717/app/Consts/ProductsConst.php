@@ -11,6 +11,7 @@ class ProductsConst
   const ID_MELLON = 'K03';
 
   public static $products_list = [
+    // @TODO: 変数で書き換え
       'K01' => [
         'name' => 'ブルーハワイ',
         'text' => '人気No.1！かき氷といえばやっぱりこれ。海に映える青いやつ！',
