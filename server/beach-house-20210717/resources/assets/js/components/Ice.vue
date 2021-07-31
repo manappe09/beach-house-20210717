@@ -4,17 +4,20 @@
     <hr>
     <ul class="ice__list">
       <li v-for="(product, key) in products" :key="key" class="ice__item">
+        <!-- かき氷のみ表示 -->
+        <template v-if="key.match(/^K/)">
           <img :src="`/images/${product.image}`" alt="" width="150" height="200"><br>
           <input :id="key" type="checkbox" :value="product.name" v-model="selectedIceLists">
           <label :for="key">{{ product.name }}</label>
           <p><small>{{ product.text }}</small></p>
+        </template>
       </li>
     </ul>
     <div class="ice__selected">
-      選択されたかき氷のリスト： {{ selectedIceLists }}
+      <!-- 選択されたかき氷のリスト： {{ selectedIceLists }}
       <br>
       この中にブルーハワイは含まれてる？ => {{ isIncludedBluehawaii }}
-      <br><br>
+      <br><br> -->
       <p>アップセル結果：{{ upsellResultValue }}番の商品です！</p>
     </div>
     <h4>ご一緒にこちらもいかがですか？</h4>
@@ -39,6 +42,17 @@ export default {
       isIncludedBluehawaii: false,
       totalPrice: 0,
       upsellResultValue: null,
+      upsellTests: [
+        `array.includes('ブルーハワイ') && array.includes('メロン')`,
+      ],
+      upsellResultList: {
+        1: 'T01',
+        2: 'T02',
+        3: 'T03',
+        4: 'G01',
+        5: 'G02',
+        6: 'G03',
+      },
     }
   },
   mounted() {
@@ -94,7 +108,7 @@ export default {
     },
     showUpsellResult(array) {
       let upsellResult;
-      if (array.includes('ブルーハワイ') && array.includes('メロン')) {
+      if (this.upsellTests[0]) {
         upsellResult = 1;
       // } else if (array.includes('メロン') && array.includes('K04')) {
       //   upsellResult = 2;

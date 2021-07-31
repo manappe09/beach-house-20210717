@@ -1,10 +1,17 @@
 .ice__list {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 0;
 }
 
 .ice__item {
+  width: 200px;
   & + & {
     margin-left: 2rem;
+  }
+  &:nth-child(3n+1) {
+    margin-left: 0;
   }
   label {
     user-select: none;

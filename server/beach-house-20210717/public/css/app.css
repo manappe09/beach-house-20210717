@@ -59,10 +59,24 @@ ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  padding: 0;
+}
+
+.ice__item {
+  width: 200px;
 }
 
 .ice__item + .ice__item {
   margin-left: 2rem;
+}
+
+.ice__item:nth-child(3n+1) {
+  margin-left: 0;
 }
 
 .ice__item label {

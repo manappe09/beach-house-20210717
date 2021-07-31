@@ -32,7 +32,7 @@
         @endforeach
     </ul> --}}
     <div id="app">
-        {{-- <ice-upsell products='{!! json_encode($products::$products_list, JSON_UNESCAPED_UNICODE) !!}'></ice-upsell> --}}
+        {{-- <ice-upsell products='<#?php echo {!! json_encode($products::$products_list, JSON_UNESCAPED_UNICODE) !!} ?>'></ice-upsell> --}}
         <ice-upsell products=""></ice-upsell>
     </div>
     {{-- const値でjsのグローバル変数として定義 --}}

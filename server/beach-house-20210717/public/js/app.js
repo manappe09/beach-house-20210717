@@ -45359,6 +45359,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // props: {
@@ -45370,7 +45373,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       selectedIceLists: [],
       isIncludedBluehawaii: false,
       totalPrice: 0,
-      upsellResultValue: null
+      upsellResultValue: null,
+      upsellTests: ['array.includes(\'\u30D6\u30EB\u30FC\u30CF\u30EF\u30A4\') && array.includes(\'\u30E1\u30ED\u30F3\')'],
+      upsellResultList: {
+        1: 'T01',
+        2: 'T02',
+        3: 'T03',
+        4: 'G01',
+        5: 'G02',
+        6: 'G03'
+      }
     };
   },
   mounted: function mounted() {
@@ -45429,7 +45441,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     },
     showUpsellResult: function showUpsellResult(array) {
       var upsellResult = void 0;
-      if (array.includes('ブルーハワイ') && array.includes('メロン')) {
+      if (this.upsellTests[0]) {
         upsellResult = 1;
         // } else if (array.includes('メロン') && array.includes('K04')) {
         //   upsellResult = 2;
@@ -45460,79 +45472,77 @@ var render = function() {
       "ul",
       { staticClass: "ice__list" },
       _vm._l(_vm.products, function(product, key) {
-        return _c("li", { key: key, staticClass: "ice__item" }, [
-          _c("img", {
-            attrs: {
-              src: "/images/" + product.image,
-              alt: "",
-              width: "150",
-              height: "200"
-            }
-          }),
-          _c("br"),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.selectedIceLists,
-                expression: "selectedIceLists"
-              }
-            ],
-            attrs: { id: key, type: "checkbox" },
-            domProps: {
-              value: product.name,
-              checked: Array.isArray(_vm.selectedIceLists)
-                ? _vm._i(_vm.selectedIceLists, product.name) > -1
-                : _vm.selectedIceLists
-            },
-            on: {
-              change: function($event) {
-                var $$a = _vm.selectedIceLists,
-                  $$el = $event.target,
-                  $$c = $$el.checked ? true : false
-                if (Array.isArray($$a)) {
-                  var $$v = product.name,
-                    $$i = _vm._i($$a, $$v)
-                  if ($$el.checked) {
-                    $$i < 0 && (_vm.selectedIceLists = $$a.concat([$$v]))
-                  } else {
-                    $$i > -1 &&
-                      (_vm.selectedIceLists = $$a
-                        .slice(0, $$i)
-                        .concat($$a.slice($$i + 1)))
-                  }
-                } else {
-                  _vm.selectedIceLists = $$c
-                }
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: key } }, [_vm._v(_vm._s(product.name))]),
-          _vm._v(" "),
-          _c("p", [_c("small", [_vm._v(_vm._s(product.text))])])
-        ])
+        return _c(
+          "li",
+          { key: key, staticClass: "ice__item" },
+          [
+            key.match(/^K/)
+              ? [
+                  _c("img", {
+                    attrs: {
+                      src: "/images/" + product.image,
+                      alt: "",
+                      width: "150",
+                      height: "200"
+                    }
+                  }),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectedIceLists,
+                        expression: "selectedIceLists"
+                      }
+                    ],
+                    attrs: { id: key, type: "checkbox" },
+                    domProps: {
+                      value: product.name,
+                      checked: Array.isArray(_vm.selectedIceLists)
+                        ? _vm._i(_vm.selectedIceLists, product.name) > -1
+                        : _vm.selectedIceLists
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.selectedIceLists,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = product.name,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              (_vm.selectedIceLists = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.selectedIceLists = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.selectedIceLists = $$c
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: key } }, [
+                    _vm._v(_vm._s(product.name))
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [_c("small", [_vm._v(_vm._s(product.text))])])
+                ]
+              : _vm._e()
+          ],
+          2
+        )
       }),
       0
     ),
     _vm._v(" "),
     _c("div", { staticClass: "ice__selected" }, [
-      _vm._v(
-        "\n  選択されたかき氷のリスト： " +
-          _vm._s(_vm.selectedIceLists) +
-          "\n  "
-      ),
-      _c("br"),
-      _vm._v(
-        "\n  この中にブルーハワイは含まれてる？ => " +
-          _vm._s(_vm.isIncludedBluehawaii) +
-          "\n  "
-      ),
-      _c("br"),
-      _c("br"),
-      _vm._v(" "),
       _c("p", [
         _vm._v(
           "アップセル結果：" + _vm._s(_vm.upsellResultValue) + "番の商品です！"

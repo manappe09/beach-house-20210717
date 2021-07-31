@@ -33,6 +33,62 @@ class ProductsConst
         'category' => 'kakigori',
         'image' => 'miffy.jpg',
       ],
+      'K04' => [
+        'name' => 'チョコレート',
+        'text' => 'ミルクチョコソースに、チョコチップの乗ったおいしいかき氷。',
+        'price' => '250',
+        'category' => 'kakigori',
+        'image' => 'miffy.jpg',
+      ],
+      'K05' => [
+        'name' => '魅惑のレインボー',
+        'text' => '暑さも吹き飛ぶ！キラキラかき氷！',
+        'price' => '300',
+        'category' => 'kakigori',
+        'image' => 'miffy.jpg',
+      ],
+      'T01' => [
+        'name' => 'ポテチ(箸付き)',
+        'text' => '作業しながらの養分補給に。 PCが汚れないように箸付きだ！',
+        'price' => '300',
+        'category' => 'tsumami',
+        'image' => 'miffy.jpg',
+      ],
+      'T02' => [
+        'name' => '焼き鳥',
+        'text' => '片手で手軽にタンパク質を補給しよう！',
+        'price' => '400',
+        'category' => 'tsumami',
+        'image' => 'miffy.jpg',
+      ],
+      'T03' => [
+        'name' => '盛りキャベツ',
+        'text' => '野菜はキャベツに決まり！ムシャムシャ食べよう。',
+        'price' => '500',
+        'category' => 'tsumami',
+        'image' => 'miffy.jpg',
+      ],
+      'G01' => [
+        'name' => '豚チャーハン',
+        'text' => '野菜も入って栄養満点！こだわりの煮豚を使用。',
+        'price' => '650',
+        'category' => 'gohan',
+        'image' => 'miffy.jpg',
+      ],
+      'G02' => [
+        'name' => '醤油ラーメン',
+        'text' => '基本のラーメン！こってりが続くと戻りたくなる原点。',
+        'price' => '700',
+        'category' => 'gohan',
+        'image' => 'miffy.jpg',
+      ],
+      'G03' => [
+        'name' => '牛丼セット',
+        'text' => '〇〇屋にも引けを取らない安定の旨さ・安さ・早さ！',
+        'price' => '950',
+        'category' => 'gohan',
+        'image' => 'miffy.jpg',
+      ],
     ];
 };
 
