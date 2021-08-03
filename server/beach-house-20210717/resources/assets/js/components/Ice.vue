@@ -13,20 +13,17 @@
         </template>
       </li>
     </ul>
-    <div class="ice__selected">
-      <!-- 選択されたかき氷のリスト： {{ selectedIceLists }}
-      <br>
-      この中にブルーハワイは含まれてる？ => {{ isIncludedBluehawaii }}
-      <br><br> -->
+    <!-- <div class="ice__selected">
       <p>アップセル結果：{{ upsellResultValue }}番の商品です！</p>
-    </div>
+    </div> -->
     <h4>ご一緒にこちらもいかがですか？</h4>
     <hr>
-    <ul class="ice__list">
-      <li class="ice__item">
-          <img src="/images/miffy.jpg" alt="" width="150" height="200"><br>
-      </li>
-    </ul>
+    <template v-if="upsellResultObj">
+      <img :src="`/images/${upsellResultObj.image}`" alt="" width="150" height="200"><br>
+      <input :id="key" type="checkbox" :value="upsellResultObj.name" v-model="selectedIceLists">
+      <label :for="key">{{ upsellResultObj.name }}</label>
+      <p><small>{{ upsellResultObj.text }}</small></p>
+    </template>
     </div>
 </template>
 
@@ -45,21 +42,19 @@ export default {
       upsellTests: [
         `array.includes('ブルーハワイ') && array.includes('メロン')`,
       ],
-      upsellResultList: {
-        1: 'T01',
-        2: 'T02',
-        3: 'T03',
-        4: 'G01',
-        5: 'G02',
-        6: 'G03',
-      },
+      upsellResultList: [
+        'T01',
+        'T02',
+        'T03',
+        'G01',
+        'G02',
+        'G03',
+      ],
+      upsellResultObj: null
     }
   },
   mounted() {
     this.products = products;
-    console.log(this.products);
-    console.log(Object.entries(this.products));
-    console.log(Object.values(this.products));
   },
   watch: {
     selectedIceLists() {
@@ -72,7 +67,7 @@ export default {
       this.updateTotalPrice(this.selectedIceLists);
 
       // アップセル結果の表示
-      this.showUpsellResult(this.selectedIceLists);
+      this.updateUpsellResultValue(this.selectedIceLists);
     }
   },
   methods: {
@@ -106,19 +101,24 @@ export default {
 
       this.totalPrice = totalPrice;
     },
-    showUpsellResult(array) {
+    updateUpsellResultValue(array) {
       let upsellResult;
-      if (this.upsellTests[0]) {
-        upsellResult = 1;
+      if (array.includes('ブルーハワイ') && array.includes('メロン')) {
+        upsellResult = 0;
       // } else if (array.includes('メロン') && array.includes('K04')) {
       //   upsellResult = 2;
       } else if (array.includes('メロン')) {
-        upsellResult = 2;
+        upsellResult = 1;
       } else if (this.totalPrice >= 300) {
-        upsellResult = 3;
+        upsellResult = 2;
       }
       this.upsellResultValue = upsellResult;
-    }
+
+      this.showUpsellResult();
+    },
+    showUpsellResult() {
+      this.upsellResultObj = this.products[this.upsellResultList[this.upsellResultValue]];
+    },
   }
 }
 </script>

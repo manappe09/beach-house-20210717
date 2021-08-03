@@ -45359,9 +45359,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // props: {
@@ -45375,21 +45372,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       totalPrice: 0,
       upsellResultValue: null,
       upsellTests: ['array.includes(\'\u30D6\u30EB\u30FC\u30CF\u30EF\u30A4\') && array.includes(\'\u30E1\u30ED\u30F3\')'],
-      upsellResultList: {
-        1: 'T01',
-        2: 'T02',
-        3: 'T03',
-        4: 'G01',
-        5: 'G02',
-        6: 'G03'
-      }
+      upsellResultList: ['T01', 'T02', 'T03', 'G01', 'G02', 'G03'],
+      upsellResultObj: null
     };
   },
   mounted: function mounted() {
     this.products = products;
-    console.log(this.products);
-    console.log(Object.entries(this.products));
-    console.log(Object.values(this.products));
   },
 
   watch: {
@@ -45403,7 +45391,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       this.updateTotalPrice(this.selectedIceLists);
 
       // アップセル結果の表示
-      this.showUpsellResult(this.selectedIceLists);
+      this.updateUpsellResultValue(this.selectedIceLists);
     }
   },
   methods: {
@@ -45439,18 +45427,23 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
       this.totalPrice = totalPrice;
     },
-    showUpsellResult: function showUpsellResult(array) {
+    updateUpsellResultValue: function updateUpsellResultValue(array) {
       var upsellResult = void 0;
-      if (this.upsellTests[0]) {
-        upsellResult = 1;
+      if (array.includes('ブルーハワイ') && array.includes('メロン')) {
+        upsellResult = 0;
         // } else if (array.includes('メロン') && array.includes('K04')) {
         //   upsellResult = 2;
       } else if (array.includes('メロン')) {
-        upsellResult = 2;
+        upsellResult = 1;
       } else if (this.totalPrice >= 300) {
-        upsellResult = 3;
+        upsellResult = 2;
       }
       this.upsellResultValue = upsellResult;
+
+      this.showUpsellResult();
+    },
+    showUpsellResult: function showUpsellResult() {
+      this.upsellResultObj = this.products[this.upsellResultList[this.upsellResultValue]];
     }
   }
 });
@@ -45463,120 +45456,155 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "ice__wrapper" }, [
-    _c("h3", [_vm._v("かき氷")]),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _c(
-      "ul",
-      { staticClass: "ice__list" },
-      _vm._l(_vm.products, function(product, key) {
-        return _c(
-          "li",
-          { key: key, staticClass: "ice__item" },
-          [
-            key.match(/^K/)
-              ? [
-                  _c("img", {
-                    attrs: {
-                      src: "/images/" + product.image,
-                      alt: "",
-                      width: "150",
-                      height: "200"
-                    }
-                  }),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selectedIceLists,
-                        expression: "selectedIceLists"
+  return _c(
+    "div",
+    { staticClass: "ice__wrapper" },
+    [
+      _c("h3", [_vm._v("かき氷")]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c(
+        "ul",
+        { staticClass: "ice__list" },
+        _vm._l(_vm.products, function(product, key) {
+          return _c(
+            "li",
+            { key: key, staticClass: "ice__item" },
+            [
+              key.match(/^K/)
+                ? [
+                    _c("img", {
+                      attrs: {
+                        src: "/images/" + product.image,
+                        alt: "",
+                        width: "150",
+                        height: "200"
                       }
-                    ],
-                    attrs: { id: key, type: "checkbox" },
-                    domProps: {
-                      value: product.name,
-                      checked: Array.isArray(_vm.selectedIceLists)
-                        ? _vm._i(_vm.selectedIceLists, product.name) > -1
-                        : _vm.selectedIceLists
-                    },
-                    on: {
-                      change: function($event) {
-                        var $$a = _vm.selectedIceLists,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = product.name,
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 &&
-                              (_vm.selectedIceLists = $$a.concat([$$v]))
+                    }),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selectedIceLists,
+                          expression: "selectedIceLists"
+                        }
+                      ],
+                      attrs: { id: key, type: "checkbox" },
+                      domProps: {
+                        value: product.name,
+                        checked: Array.isArray(_vm.selectedIceLists)
+                          ? _vm._i(_vm.selectedIceLists, product.name) > -1
+                          : _vm.selectedIceLists
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.selectedIceLists,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = product.name,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                (_vm.selectedIceLists = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.selectedIceLists = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
                           } else {
-                            $$i > -1 &&
-                              (_vm.selectedIceLists = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
+                            _vm.selectedIceLists = $$c
                           }
-                        } else {
-                          _vm.selectedIceLists = $$c
                         }
                       }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("label", { attrs: { for: key } }, [
-                    _vm._v(_vm._s(product.name))
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [_c("small", [_vm._v(_vm._s(product.text))])])
-                ]
-              : _vm._e()
-          ],
-          2
-        )
-      }),
-      0
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "ice__selected" }, [
-      _c("p", [
-        _vm._v(
-          "アップセル結果：" + _vm._s(_vm.upsellResultValue) + "番の商品です！"
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("h4", [_vm._v("ご一緒にこちらもいかがですか？")]),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _vm._m(0)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "ice__list" }, [
-      _c("li", { staticClass: "ice__item" }, [
-        _c("img", {
-          attrs: {
-            src: "/images/miffy.jpg",
-            alt: "",
-            width: "150",
-            height: "200"
-          }
+                    }),
+                    _vm._v(" "),
+                    _c("label", { attrs: { for: key } }, [
+                      _vm._v(_vm._s(product.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [_c("small", [_vm._v(_vm._s(product.text))])])
+                  ]
+                : _vm._e()
+            ],
+            2
+          )
         }),
-        _c("br")
-      ])
-    ])
-  }
-]
+        0
+      ),
+      _vm._v(" "),
+      _c("h4", [_vm._v("ご一緒にこちらもいかがですか？")]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _vm.upsellResultObj
+        ? [
+            _c("img", {
+              attrs: {
+                src: "/images/" + _vm.upsellResultObj.image,
+                alt: "",
+                width: "150",
+                height: "200"
+              }
+            }),
+            _c("br"),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selectedIceLists,
+                  expression: "selectedIceLists"
+                }
+              ],
+              attrs: { id: _vm.key, type: "checkbox" },
+              domProps: {
+                value: _vm.upsellResultObj.name,
+                checked: Array.isArray(_vm.selectedIceLists)
+                  ? _vm._i(_vm.selectedIceLists, _vm.upsellResultObj.name) > -1
+                  : _vm.selectedIceLists
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.selectedIceLists,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = _vm.upsellResultObj.name,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.selectedIceLists = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.selectedIceLists = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.selectedIceLists = $$c
+                  }
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: _vm.key } }, [
+              _vm._v(_vm._s(_vm.upsellResultObj.name))
+            ]),
+            _vm._v(" "),
+            _c("p", [_c("small", [_vm._v(_vm._s(_vm.upsellResultObj.text))])])
+          ]
+        : _vm._e()
+    ],
+    2
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
