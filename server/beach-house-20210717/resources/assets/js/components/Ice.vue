@@ -6,7 +6,7 @@
       <li v-for="(product, key) in products" :key="key" class="ice__item">
         <!-- かき氷のみ表示 -->
         <template v-if="key.match(/^K/)">
-          <img :src="`/images/${product.image}`" alt="" width="150" height="200"><br>
+          <img :src="`/images/${product.image}`" alt="" width="150" height="150"><br>
           <input :id="key" type="checkbox" :value="product.name" v-model="selectedIceLists">
           <label :for="key">{{ product.name }}</label>
           <p><small>{{ product.text }}</small></p>
@@ -19,9 +19,8 @@
     <h4>ご一緒にこちらもいかがですか？</h4>
     <hr>
     <template v-if="upsellResultObj">
-      <img :src="`/images/${upsellResultObj.image}`" alt="" width="150" height="200"><br>
-      <input :id="key" type="checkbox" :value="upsellResultObj.name" v-model="selectedIceLists">
-      <label :for="key">{{ upsellResultObj.name }}</label>
+      <img :src="`/images/${upsellResultObj.image}`" alt="" width="150" height="150"><br>
+      <p>{{ upsellResultObj.name }}</p>
       <p><small>{{ upsellResultObj.text }}</small></p>
     </template>
     </div>

@@ -45358,7 +45358,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // props: {
@@ -45479,7 +45478,7 @@ var render = function() {
                         src: "/images/" + product.image,
                         alt: "",
                         width: "150",
-                        height: "200"
+                        height: "150"
                       }
                     }),
                     _c("br"),
@@ -45549,53 +45548,12 @@ var render = function() {
                 src: "/images/" + _vm.upsellResultObj.image,
                 alt: "",
                 width: "150",
-                height: "200"
+                height: "150"
               }
             }),
             _c("br"),
             _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.selectedIceLists,
-                  expression: "selectedIceLists"
-                }
-              ],
-              attrs: { id: _vm.key, type: "checkbox" },
-              domProps: {
-                value: _vm.upsellResultObj.name,
-                checked: Array.isArray(_vm.selectedIceLists)
-                  ? _vm._i(_vm.selectedIceLists, _vm.upsellResultObj.name) > -1
-                  : _vm.selectedIceLists
-              },
-              on: {
-                change: function($event) {
-                  var $$a = _vm.selectedIceLists,
-                    $$el = $event.target,
-                    $$c = $$el.checked ? true : false
-                  if (Array.isArray($$a)) {
-                    var $$v = _vm.upsellResultObj.name,
-                      $$i = _vm._i($$a, $$v)
-                    if ($$el.checked) {
-                      $$i < 0 && (_vm.selectedIceLists = $$a.concat([$$v]))
-                    } else {
-                      $$i > -1 &&
-                        (_vm.selectedIceLists = $$a
-                          .slice(0, $$i)
-                          .concat($$a.slice($$i + 1)))
-                    }
-                  } else {
-                    _vm.selectedIceLists = $$c
-                  }
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("label", { attrs: { for: _vm.key } }, [
-              _vm._v(_vm._s(_vm.upsellResultObj.name))
-            ]),
+            _c("p", [_vm._v(_vm._s(_vm.upsellResultObj.name))]),
             _vm._v(" "),
             _c("p", [_c("small", [_vm._v(_vm._s(_vm.upsellResultObj.text))])])
           ]
