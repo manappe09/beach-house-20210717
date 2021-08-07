@@ -1,1 +1,1 @@
-web: vendor/bin/beach-house-20210717 server/beach-house-20210717/public/
+web: vendor/bin/beach-house-20210717 public/
