@@ -18,5 +18,7 @@
         "lodash": "^4.17.4",
         "vue": "^2.6.14"
     },
-    "dependencies": {}
+    "dependencies": {
+        "vue-loading-overlay": "^3.4.2"
+    }
 }

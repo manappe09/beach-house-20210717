@@ -11,7 +11,7 @@
           <p><small>{{ kakigori.text }}</small></p>
       </li>
     </ul>
-    <h4>ご一緒にこちらもいかがですか？</h4>
+    <h4 id="upsell_target">ご一緒にこちらもいかがですか？</h4>
     <hr>
     <template v-if="upsellResultObj">
       <div class="ice__upsell">
@@ -20,10 +20,16 @@
         <p><small>{{ upsellResultObj.text }}</small></p>
       </div>
     </template>
+    <div class="vld-parent">
+        <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>  
+    </div>
     </div>
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+
 export default {
   data() {
     return {
@@ -43,8 +49,13 @@ export default {
         'G02',
         'G03',
       ],
-      upsellResultObj: null
+      upsellResultObj: null,
+      isLoading: false,
+      fullPage: true
     }
+  },
+  components: {
+    Loading
   },
   mounted() {
     this.products = products;
@@ -74,6 +85,10 @@ export default {
 
       // アップセル結果の表示
       this.updateUpsellResultValue(this.selectedIceLists);
+    },
+    upsellResultValue() {
+      this.runLoadingAnimation();
+      this.goUpsellArea();
     }
   },
   methods: {
@@ -126,6 +141,28 @@ export default {
     },
     showUpsellResult() {
       this.upsellResultObj = this.products[this.upsellResultList[this.upsellResultValue]];
+    },
+    goUpsellArea() {
+      const target = document.getElementById('upsell_target');
+      const targetPosition = target.getBoundingClientRect().y;
+      const targetHeight = target.getBoundingClientRect().height;
+      const upsellArea = targetPosition + targetHeight;
+
+      console.log(targetPosition, window.pageYOffset);
+      // console.log(targetHeight);
+      // console.log(targetPosition);
+
+      window.scrollTo({
+        top: upsellArea,
+        behavior: 'smooth'
+      })
+    },
+    runLoadingAnimation() {
+      this.isLoading = true;
+      // simulate AJAX
+      setTimeout(() => {
+          this.isLoading = false
+      }, 500)
     },
   }
 }
