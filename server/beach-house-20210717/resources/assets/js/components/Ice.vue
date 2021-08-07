@@ -3,34 +3,28 @@
       <h3>かき氷</h3>
     <hr>
     <ul class="ice__list">
-      <li v-for="(product, key) in products" :key="key" class="ice__item">
+      <li v-for="(kakigori, key) in kakigoriProducts" :key="key" class="ice__item">
         <!-- かき氷のみ表示 -->
-        <template v-if="key.match(/^K/)">
-          <img :src="`/images/${product.image}`" alt="" width="150" height="150"><br>
-          <input :id="key" type="checkbox" :value="product.name" v-model="selectedIceLists">
-          <label :for="key">{{ product.name }}</label>
-          <p><small>{{ product.text }}</small></p>
-        </template>
+          <img :src="`/images/${kakigori.image}`" alt="" width="120" height="120"><br>
+          <input :id="key" type="checkbox" :value="kakigori.name" v-model="selectedIceLists">
+          <label :for="key">{{ kakigori.name }}</label>
+          <p><small>{{ kakigori.text }}</small></p>
       </li>
     </ul>
-    <!-- <div class="ice__selected">
-      <p>アップセル結果：{{ upsellResultValue }}番の商品です！</p>
-    </div> -->
     <h4>ご一緒にこちらもいかがですか？</h4>
     <hr>
     <template v-if="upsellResultObj">
-      <img :src="`/images/${upsellResultObj.image}`" alt="" width="150" height="150"><br>
-      <p>{{ upsellResultObj.name }}</p>
-      <p><small>{{ upsellResultObj.text }}</small></p>
+      <div class="ice__upsell">
+        <img :src="`/images/${upsellResultObj.image}`" alt="" width="150" height="150"><br>
+        <p>{{ upsellResultObj.name }}</p>
+        <p><small>{{ upsellResultObj.text }}</small></p>
+      </div>
     </template>
     </div>
 </template>
 
 <script>
 export default {
-  // props: {
-  //   products: Array
-  // },
   data() {
     return {
       products: [],
@@ -54,6 +48,19 @@ export default {
   },
   mounted() {
     this.products = products;
+
+    // this.setKakigoriProducts();
+  },
+  computed: {
+    kakigoriProducts() {
+      let kakigoriProductsObj = {};
+
+      Object.keys(this.products)
+        .filter(key => key.match(/^K/))
+        .forEach(key => kakigoriProductsObj[key] = this.products[key]);
+        
+      return kakigoriProductsObj;
+    },
   },
   watch: {
     selectedIceLists() {
@@ -90,9 +97,6 @@ export default {
         selectedProductsPrices.push(Number(selectedProperty.price));
       })
 
-      // console.log(selectedPropertyLists);
-      // console.log(selectedProductsPrices);
-
       // @TODO: 処理分ける / 価格合計を計算するパート
       selectedProductsPrices.forEach(selectedProductsPrice => {
         totalPrice += selectedProductsPrice;
@@ -102,15 +106,20 @@ export default {
     },
     updateUpsellResultValue(array) {
       let upsellResult;
-      if (array.includes('ブルーハワイ') && array.includes('メロン')) {
+      if (array.includes('ブルーハワイ') && array.includes('イチゴ')) {
         upsellResult = 0;
-      // } else if (array.includes('メロン') && array.includes('K04')) {
-      //   upsellResult = 2;
-      } else if (array.includes('メロン')) {
+      } else if (array.includes('メロン') && array.includes('チョコレート')) {
         upsellResult = 1;
-      } else if (this.totalPrice >= 300) {
+      } else if (array.includes('魅惑のレインボー')) {
         upsellResult = 2;
+      } else if (array.length === 1) {
+        upsellResult = 3;
+      } else if (this.totalPrice <= 500 && this.totalPrice >= 1) {
+        upsellResult = 4;
+      } else if (this.totalPrice <= 1000 && this.totalPrice >= 501) {
+        upsellResult = 5;
       }
+
       this.upsellResultValue = upsellResult;
 
       this.showUpsellResult();

@@ -45355,14 +45355,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  // props: {
-  //   products: Array
-  // },
   data: function data() {
     return {
       products: [],
@@ -45377,8 +45371,25 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   },
   mounted: function mounted() {
     this.products = products;
+
+    // this.setKakigoriProducts();
   },
 
+  computed: {
+    kakigoriProducts: function kakigoriProducts() {
+      var _this = this;
+
+      var kakigoriProductsObj = {};
+
+      Object.keys(this.products).filter(function (key) {
+        return key.match(/^K/);
+      }).forEach(function (key) {
+        return kakigoriProductsObj[key] = _this.products[key];
+      });
+
+      return kakigoriProductsObj;
+    }
+  },
   watch: {
     selectedIceLists: function selectedIceLists() {
       console.log('リストが更新されました');
@@ -45416,9 +45427,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         selectedProductsPrices.push(Number(selectedProperty.price));
       });
 
-      // console.log(selectedPropertyLists);
-      // console.log(selectedProductsPrices);
-
       // @TODO: 処理分ける / 価格合計を計算するパート
       selectedProductsPrices.forEach(function (selectedProductsPrice) {
         totalPrice += selectedProductsPrice;
@@ -45428,15 +45436,20 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     },
     updateUpsellResultValue: function updateUpsellResultValue(array) {
       var upsellResult = void 0;
-      if (array.includes('ブルーハワイ') && array.includes('メロン')) {
+      if (array.includes('ブルーハワイ') && array.includes('イチゴ')) {
         upsellResult = 0;
-        // } else if (array.includes('メロン') && array.includes('K04')) {
-        //   upsellResult = 2;
-      } else if (array.includes('メロン')) {
+      } else if (array.includes('メロン') && array.includes('チョコレート')) {
         upsellResult = 1;
-      } else if (this.totalPrice >= 300) {
+      } else if (array.includes('魅惑のレインボー')) {
         upsellResult = 2;
+      } else if (array.length === 1) {
+        upsellResult = 3;
+      } else if (this.totalPrice <= 500 && this.totalPrice >= 1) {
+        upsellResult = 4;
+      } else if (this.totalPrice <= 1000 && this.totalPrice >= 501) {
+        upsellResult = 5;
       }
+
       this.upsellResultValue = upsellResult;
 
       this.showUpsellResult();
@@ -45466,73 +45479,63 @@ var render = function() {
       _c(
         "ul",
         { staticClass: "ice__list" },
-        _vm._l(_vm.products, function(product, key) {
-          return _c(
-            "li",
-            { key: key, staticClass: "ice__item" },
-            [
-              key.match(/^K/)
-                ? [
-                    _c("img", {
-                      attrs: {
-                        src: "/images/" + product.image,
-                        alt: "",
-                        width: "150",
-                        height: "150"
-                      }
-                    }),
-                    _c("br"),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.selectedIceLists,
-                          expression: "selectedIceLists"
-                        }
-                      ],
-                      attrs: { id: key, type: "checkbox" },
-                      domProps: {
-                        value: product.name,
-                        checked: Array.isArray(_vm.selectedIceLists)
-                          ? _vm._i(_vm.selectedIceLists, product.name) > -1
-                          : _vm.selectedIceLists
-                      },
-                      on: {
-                        change: function($event) {
-                          var $$a = _vm.selectedIceLists,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = product.name,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 &&
-                                (_vm.selectedIceLists = $$a.concat([$$v]))
-                            } else {
-                              $$i > -1 &&
-                                (_vm.selectedIceLists = $$a
-                                  .slice(0, $$i)
-                                  .concat($$a.slice($$i + 1)))
-                            }
-                          } else {
-                            _vm.selectedIceLists = $$c
-                          }
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("label", { attrs: { for: key } }, [
-                      _vm._v(_vm._s(product.name))
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [_c("small", [_vm._v(_vm._s(product.text))])])
-                  ]
-                : _vm._e()
-            ],
-            2
-          )
+        _vm._l(_vm.kakigoriProducts, function(kakigori, key) {
+          return _c("li", { key: key, staticClass: "ice__item" }, [
+            _c("img", {
+              attrs: {
+                src: "/images/" + kakigori.image,
+                alt: "",
+                width: "120",
+                height: "120"
+              }
+            }),
+            _c("br"),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selectedIceLists,
+                  expression: "selectedIceLists"
+                }
+              ],
+              attrs: { id: key, type: "checkbox" },
+              domProps: {
+                value: kakigori.name,
+                checked: Array.isArray(_vm.selectedIceLists)
+                  ? _vm._i(_vm.selectedIceLists, kakigori.name) > -1
+                  : _vm.selectedIceLists
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.selectedIceLists,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = kakigori.name,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.selectedIceLists = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.selectedIceLists = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.selectedIceLists = $$c
+                  }
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: key } }, [
+              _vm._v(_vm._s(kakigori.name))
+            ]),
+            _vm._v(" "),
+            _c("p", [_c("small", [_vm._v(_vm._s(kakigori.text))])])
+          ])
         }),
         0
       ),
@@ -45543,19 +45546,21 @@ var render = function() {
       _vm._v(" "),
       _vm.upsellResultObj
         ? [
-            _c("img", {
-              attrs: {
-                src: "/images/" + _vm.upsellResultObj.image,
-                alt: "",
-                width: "150",
-                height: "150"
-              }
-            }),
-            _c("br"),
-            _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(_vm.upsellResultObj.name))]),
-            _vm._v(" "),
-            _c("p", [_c("small", [_vm._v(_vm._s(_vm.upsellResultObj.text))])])
+            _c("div", { staticClass: "ice__upsell" }, [
+              _c("img", {
+                attrs: {
+                  src: "/images/" + _vm.upsellResultObj.image,
+                  alt: "",
+                  width: "150",
+                  height: "150"
+                }
+              }),
+              _c("br"),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(_vm.upsellResultObj.name))]),
+              _vm._v(" "),
+              _c("p", [_c("small", [_vm._v(_vm._s(_vm.upsellResultObj.text))])])
+            ])
           ]
         : _vm._e()
     ],

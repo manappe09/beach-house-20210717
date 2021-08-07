@@ -6,12 +6,9 @@
 }
 
 .ice__item {
-  width: 200px;
+  width: 115px;
   & + & {
     margin-left: 2rem;
-  }
-  &:nth-child(3n+1) {
-    margin-left: 0;
   }
   label {
     user-select: none;
@@ -20,5 +17,14 @@
     &:hover {
       opacity: .5;
     }
+  }
+}
+
+.ice__upsell {
+  img {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    object-fit: contain;
   }
 }
