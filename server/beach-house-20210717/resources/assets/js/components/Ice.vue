@@ -149,6 +149,8 @@ export default {
       const upsellArea = targetPosition + targetHeight;
 
       console.log(targetPosition, window.pageYOffset);
+      // console.log(targetHeight);
+      // console.log(targetPosition);
 
       window.scrollTo({
         top: upsellArea,
