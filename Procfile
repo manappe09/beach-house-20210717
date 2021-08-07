@@ -1,0 +1,1 @@
+web: vendor/bin/beach-house-20210717 public/
