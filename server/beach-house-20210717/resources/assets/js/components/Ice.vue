@@ -37,7 +37,6 @@ export default {
   data() {
     return {
       selectedIceLists: [],
-      isIncludedBluehawaii: false,
       totalPrice: 0,
       upsellResultValue: null,
       upsellTests: [
@@ -66,17 +65,7 @@ export default {
     this.$store.dispatch('increment', 2)
     // this.setKakigoriProducts();
   },
-  computed: {
-    kakigoriProducts() {
-      let kakigoriProductsObj = {};
-
-      Object.keys(this.products)
-        .filter(key => key.match(/^K/))
-        .forEach(key => kakigoriProductsObj[key] = this.products[key]);
-        
-      return kakigoriProductsObj;
-    },
-  },
+  computed: {},
   watch: {
     selectedIceLists() {
       console.log('リストが更新されました');
