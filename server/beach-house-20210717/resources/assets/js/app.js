@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+import store from './store';
 
 window.Vue = require('vue');
 
@@ -20,5 +21,6 @@ Vue.component('hello', require('./components/Hello.vue'));
 Vue.component('ice-upsell', require('./components/Ice.vue'));
 
 const app = new Vue({
-    el: '#app'
+  el: "#app",
+  store,
 });

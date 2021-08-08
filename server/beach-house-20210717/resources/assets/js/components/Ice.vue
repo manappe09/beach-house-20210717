@@ -1,39 +1,41 @@
 <template>
     <div class="ice__wrapper">
       <h3>かき氷</h3>
-    <hr>
-    <ul class="ice__list">
-      <li v-for="(kakigori, key) in kakigoriProducts" :key="key" class="ice__item">
-        <!-- かき氷のみ表示 -->
-          <img :src="`/images/${kakigori.image}`" alt="" width="120" height="120"><br>
-          <input :id="key" type="checkbox" :value="kakigori.name" v-model="selectedIceLists">
-          <label :for="key">{{ kakigori.name }}</label>
-          <p><small>{{ kakigori.text }}</small></p>
-      </li>
-    </ul>
-    <h4>ご一緒にこちらもいかがですか？</h4>
-    <hr>
-    <template v-if="upsellResultObj">
-      <div id="upsell_target" class="ice__upsell">
-        <img :src="`/images/${upsellResultObj.image}`" alt="" width="150" height="150"><br>
-        <p>{{ upsellResultObj.name }}</p>
-        <p><small>{{ upsellResultObj.text }}</small></p>
+      store: {{ demoProduct }}
+      <hr>
+      <ul class="ice__list">
+        <li v-for="(kakigori, key) in kakigoriProducts" :key="key" class="ice__item">
+          <!-- かき氷のみ表示 -->
+            <img :src="`/images/${kakigori.image}`" alt="" width="120" height="120"><br>
+            <input :id="key" type="checkbox" :value="kakigori.name" v-model="selectedIceLists">
+            <label :for="key">{{ kakigori.name }}</label>
+            <p><small>{{ kakigori.text }}</small></p>
+        </li>
+      </ul>
+      <h4>ご一緒にこちらもいかがですか？</h4>
+      <hr>
+      <template v-if="upsellResultObj">
+        <div id="upsell_target" class="ice__upsell">
+          <img :src="`/images/${upsellResultObj.image}`" alt="" width="150" height="150"><br>
+          <p>{{ upsellResultObj.name }}</p>
+          <p><small>{{ upsellResultObj.text }}</small></p>
+        </div>
+      </template>
+      <div class="vld-parent">
+          <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>  
       </div>
-    </template>
-    <div class="vld-parent">
-        <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>  
-    </div>
     </div>
 </template>
 
 <script>
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import { initProductsData } from '../mixins/initProductsData';
 
 export default {
+  mixins: [initProductsData],
   data() {
     return {
-      products: [],
       selectedIceLists: [],
       isIncludedBluehawaii: false,
       totalPrice: 0,
@@ -51,15 +53,17 @@ export default {
       ],
       upsellResultObj: null,
       isLoading: false,
-      fullPage: true
+      fullPage: true,
+      demoProduct: '',
     }
   },
   components: {
     Loading
   },
   mounted() {
-    this.products = products;
-
+    // store demo
+    this.demoProduct = this.$store.state.products.demoProduct;
+    this.$store.dispatch('increment', 2)
     // this.setKakigoriProducts();
   },
   computed: {
