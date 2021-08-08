@@ -11,10 +11,10 @@
           <p><small>{{ kakigori.text }}</small></p>
       </li>
     </ul>
-    <h4 id="upsell_target">ご一緒にこちらもいかがですか？</h4>
+    <h4>ご一緒にこちらもいかがですか？</h4>
     <hr>
     <template v-if="upsellResultObj">
-      <div class="ice__upsell">
+      <div id="upsell_target" class="ice__upsell">
         <img :src="`/images/${upsellResultObj.image}`" alt="" width="150" height="150"><br>
         <p>{{ upsellResultObj.name }}</p>
         <p><small>{{ upsellResultObj.text }}</small></p>
@@ -143,16 +143,17 @@ export default {
       this.upsellResultObj = this.products[this.upsellResultList[this.upsellResultValue]];
     },
     goUpsellArea() {
-      const target = document.getElementById('upsell_target');
-      const targetPosition = target.getBoundingClientRect().y;
-      const targetHeight = target.getBoundingClientRect().height;
-      const upsellArea = targetPosition + targetHeight;
+      this.$nextTick(() => {
+        const target = document.getElementById('upsell_target');
+        
+        const targetPosition = target?target.getBoundingClientRect().y:0;
+        const targetHeight = target?target.getBoundingClientRect().height:0;
+        const upsellArea = targetPosition + targetHeight;
 
-      console.log(targetPosition, window.pageYOffset);
-
-      window.scrollTo({
-        top: upsellArea,
-        behavior: 'smooth'
+        window.scrollTo({
+          top: upsellArea,
+          behavior: 'smooth'
+        })
       })
     },
     runLoadingAnimation() {
@@ -160,7 +161,7 @@ export default {
       // simulate AJAX
       setTimeout(() => {
           this.isLoading = false
-      }, 500)
+      }, 300)
     },
   }
 }
