@@ -46371,18 +46371,25 @@ var index = {
 "use strict";
 var state = {
   demoProduct: 'demoProduct2',
+  products: {},
   kakigoriProducts: {}
 };
 
 var getters = {};
 
 var mutations = {
+  setProducts: function setProducts(state, obj) {
+    state.products = obj;
+  },
   setKakigoriProducts: function setKakigoriProducts(state, obj) {
     state.kakigoriProducts = obj;
   }
 };
 
 var actions = {
+  setProducts: function setProducts(context, obj) {
+    context.commit('setProducts', obj);
+  },
   setKakigoriProducts: function setKakigoriProducts(context, obj) {
     context.commit("setKakigoriProducts", obj);
   }
@@ -47420,13 +47427,8 @@ module.exports = function (css) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return initProductsData; });
 var initProductsData = {
-  data: function data() {
-    return {
-      products: {}
-    };
-  },
   mounted: function mounted() {
-    this.products = products;
+    this.$store.dispatch('setPsroductsData', products);
   },
 
   computed: {

@@ -1,11 +1,6 @@
 export const initProductsData = {
-  data() {
-    return {
-      products: {},
-    };
-  },
   mounted() {
-    this.products = products;
+    this.$store.dispatch('setPsroductsData', products);
   },
   computed: {
     kakigoriProducts() {
