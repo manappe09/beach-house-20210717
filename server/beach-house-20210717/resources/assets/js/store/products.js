@@ -20,7 +20,13 @@ const actions = {
     context.commit('setProducts', obj);
   },
   setKakigoriProducts(context, obj) {
-    context.commit("setKakigoriProducts", obj);
+    let kakigoriProductsObj = {};
+
+    Object.keys(obj)
+      .filter((key) => key.match(/^K/))
+      .forEach((key) => (kakigoriProductsObj[key] = obj[key]));
+
+    context.commit("setKakigoriProducts", kakigoriProductsObj);
   }
 };
 

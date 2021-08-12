@@ -1,20 +1,9 @@
+// 商品データの初期化処理は、多くのページで必要なのでmixinで共通化
 export const initProductsData = {
   mounted() {
-    this.$store.dispatch('setPsroductsData', products);
-  },
-  computed: {
-    kakigoriProducts() {
-      let kakigoriProductsObj = {};
-
-      Object.keys(this.products)
-        .filter((key) => key.match(/^K/))
-        .forEach(
-          (key) => (kakigoriProductsObj[key] = this.products[key])
-        );
-
-      return kakigoriProductsObj;
-    },
+    // productsは、blade内で定義しConst値の内容が代入されたグローバル変数。$productsとかにしたほうがいいかなぁ。
+    this.$store.dispatch("setProducts", products);
+    // 1個にまとめたほうがいいのか、分かりやすさ重視でそのままがいいのか……。
+    this.$store.dispatch("setKakigoriProducts", products);
   },
 };
-
-// @TODO: Vuexでかき氷のみのデータを返したり、アップセルの状態管理など、外出しできる処理を外へ

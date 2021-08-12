@@ -1,7 +1,7 @@
 <template>
     <div class="ice__wrapper">
       <h3>かき氷</h3>
-      store: {{ demoProduct }}
+      <!-- store: {{ demoProduct }} -->
       <hr>
       <ul class="ice__list">
         <li v-for="(kakigori, key) in kakigoriProducts" :key="key" class="ice__item">
@@ -54,6 +54,8 @@ export default {
       isLoading: false,
       fullPage: true,
       demoProduct: '',
+      kakigoriProducts: {},
+      products: {},
     }
   },
   components: {
@@ -62,8 +64,10 @@ export default {
   mounted() {
     // store demo
     this.demoProduct = this.$store.state.products.demoProduct;
-    this.$store.dispatch('increment', 2)
-    // this.setKakigoriProducts();
+    this.$store.dispatch('increment', 2);
+
+    this.products = this.$store.state.products.products;
+    this.kakigoriProducts = this.$store.state.products.kakigoriProducts;
   },
   computed: {},
   watch: {

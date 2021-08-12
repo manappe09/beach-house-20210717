@@ -46391,7 +46391,15 @@ var actions = {
     context.commit('setProducts', obj);
   },
   setKakigoriProducts: function setKakigoriProducts(context, obj) {
-    context.commit("setKakigoriProducts", obj);
+    var kakigoriProductsObj = {};
+
+    Object.keys(obj).filter(function (key) {
+      return key.match(/^K/);
+    }).forEach(function (key) {
+      return kakigoriProductsObj[key] = obj[key];
+    });
+
+    context.commit("setKakigoriProducts", kakigoriProductsObj);
   }
 };
 
@@ -46721,7 +46729,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       upsellResultObj: null,
       isLoading: false,
       fullPage: true,
-      demoProduct: ''
+      demoProduct: '',
+      kakigoriProducts: {},
+      products: {}
     };
   },
 
@@ -46732,7 +46742,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     // store demo
     this.demoProduct = this.$store.state.products.demoProduct;
     this.$store.dispatch('increment', 2);
-    // this.setKakigoriProducts();
+
+    this.products = this.$store.state.products.products;
+    this.kakigoriProducts = this.$store.state.products.kakigoriProducts;
   },
 
   computed: {},
@@ -47426,29 +47438,15 @@ module.exports = function (css) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return initProductsData; });
+// 商品データの初期化処理は、多くのページで必要なのでmixinで共通化
 var initProductsData = {
   mounted: function mounted() {
-    this.$store.dispatch('setPsroductsData', products);
-  },
-
-  computed: {
-    kakigoriProducts: function kakigoriProducts() {
-      var _this = this;
-
-      var kakigoriProductsObj = {};
-
-      Object.keys(this.products).filter(function (key) {
-        return key.match(/^K/);
-      }).forEach(function (key) {
-        return kakigoriProductsObj[key] = _this.products[key];
-      });
-
-      return kakigoriProductsObj;
-    }
+    // productsは、blade内で定義しConst値の内容が代入されたグローバル変数。$productsとかにしたほうがいいかなぁ。
+    this.$store.dispatch("setProducts", products);
+    // 1個にまとめたほうがいいのか、分かりやすさ重視でそのままがいいのか……。
+    this.$store.dispatch("setKakigoriProducts", products);
   }
 };
-
-// @TODO: Vuexでかき氷のみのデータを返したり、アップセルの状態管理など、外出しできる処理を外へ
 
 /***/ }),
 /* 58 */
@@ -47463,7 +47461,7 @@ var render = function() {
     { staticClass: "ice__wrapper" },
     [
       _c("h3", [_vm._v("かき氷")]),
-      _vm._v("\n  store: " + _vm._s(_vm.demoProduct) + "\n  "),
+      _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
       _c(
