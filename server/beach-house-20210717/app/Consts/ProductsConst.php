@@ -18,6 +18,8 @@ class ProductsConst
         'price' => '200',
         'category' => 'kakigori',
         'image' => 'kakigori_bluehawaii.png',
+        // MIX_IMAGE_SOURCEで書き換え
+        // 'image' => 'kakigori_bluehawaii.png',
       ],
       'K02' => [
         'name' => 'イチゴ',
