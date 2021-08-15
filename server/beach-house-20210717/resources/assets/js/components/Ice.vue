@@ -7,7 +7,7 @@
         <li v-for="(kakigori, key) in kakigoriProducts" :key="key" class="ice__item">
           <!-- かき氷のみ表示 -->
             <img :src="`/images/${kakigori.image}`" alt="" width="120" height="120"><br>
-            <input :id="key" type="checkbox" :value="kakigori.name" v-model="selectedIceLists">
+            <input :id="key" type="checkbox" :value="key" v-model="selectedIceLists">
             <label :for="key">{{ kakigori.name }}</label>
             <p><small>{{ kakigori.text }}</small></p>
         </li>
@@ -74,7 +74,9 @@ export default {
     selectedIceLists() {
       console.log('リストが更新されました');
 
-      // 今後処理色々することも考えて、商品名でなく商品ごとのオブジェクトで持ったほうがいいかも…。
+      this.$store.dispatch('updateSelectedIceLists', this.selectedIceLists);
+
+      // 練習用
       this.isIncludedBluehawaii = this.checkIncludeOneProduct(this.selectedIceLists, 'ブルーハワイ');
 
       // 合計金額の更新
@@ -92,7 +94,7 @@ export default {
     checkIncludeOneProduct(array, product) {
       return array.includes(product);
     },
-    updateTotalPrice(array) {
+    updateTotalPrice(selectedProductsList) {
       // 商品コード以下のプロパティ群を配列として持って、nameが選択済みアイテムと一致してたらそのpriceをリストに入れる。
       // その商品が何かは特定せず、あくまで名前に対応する価格をリストアップする。
       const productsPropertyLists = Object.values(this.products);
@@ -101,7 +103,7 @@ export default {
       let totalPrice = 0;
 
       // @TODO: 処理分ける / 価格リストを取得するパート
-      array.forEach(selectedProduct => {
+      selectedProductsList.forEach(selectedProduct => {
         selectedPropertyLists.push(...productsPropertyLists.filter(property => property.name === selectedProduct));
       })
 

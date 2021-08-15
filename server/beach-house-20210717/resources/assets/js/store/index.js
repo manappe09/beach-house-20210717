@@ -4,10 +4,12 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 import products from './products';
+import upsell from './upsell';
 
 const store = new Vuex.Store({
   modules: {
     products,
+    upsell,
   },
   state: {
     count: 0,
