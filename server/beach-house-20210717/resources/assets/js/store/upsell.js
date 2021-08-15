@@ -28,10 +28,12 @@ const mutations = {
 
 const actions = {
   updateSelectedIceLists(context, selectedIceList) {
-    // watchで更新するので不要かも…。やっぱいる
+    // watchで更新するので不要かも…。やっぱいる？
     context.commit("updateSelectedIceLists", selectedIceList);
   },
-  updateTotalPrice(context, totalPrice) {},
+  updateTotalPrice(context, totalPrice) {
+    context.commit("updateTotalPrice", totalPrice);
+  },
   updateUpsellResultValue(context, upsellResultValue) {},
   updateUpsellResultList(context, upsellResultList) {},
   updateUpsellResultObj(context, upsellResultObj) {},

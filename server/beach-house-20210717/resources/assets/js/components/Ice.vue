@@ -37,7 +37,6 @@ export default {
   data() {
     return {
       selectedIceLists: [],
-      totalPrice: 0,
       upsellResultValue: null,
       upsellTests: [
         `array.includes('ブルーハワイ') && array.includes('メロン')`,
@@ -94,29 +93,21 @@ export default {
     checkIncludeOneProduct(array, product) {
       return array.includes(product);
     },
-    updateTotalPrice(selectedProductsList) {
-      // 商品コード以下のプロパティ群を配列として持って、nameが選択済みアイテムと一致してたらそのpriceをリストに入れる。
-      // その商品が何かは特定せず、あくまで名前に対応する価格をリストアップする。
-      const productsPropertyLists = Object.values(this.products);
-      let selectedPropertyLists = [];
-      let selectedProductsPrices = [];
+    updateTotalPrice() {
+      // @TODO: ここをstoreに移すところから
       let totalPrice = 0;
 
-      // @TODO: 処理分ける / 価格リストを取得するパート
-      selectedProductsList.forEach(selectedProduct => {
-        selectedPropertyLists.push(...productsPropertyLists.filter(property => property.name === selectedProduct));
-      })
+      // this.selectedIceList と同値だけどstore管理する必要あるのか謎…。
+      const selectedIceList = this.$store.state.upsell.selectedIceList;
 
-      selectedPropertyLists.forEach(selectedProperty => {
-        selectedProductsPrices.push(Number(selectedProperty.price));
-      })
+      // getters使った方が簡潔？
+      const kakigoriProducts = this.$store.state.products.kakigoriProducts;
 
-      // @TODO: 処理分ける / 価格合計を計算するパート
-      selectedProductsPrices.forEach(selectedProductsPrice => {
-        totalPrice += selectedProductsPrice;
-      })
+      selectedIceList.forEach(selectedIceKey => {
+        totalPrice += Number(kakigoriProducts[selectedIceKey].price);
+      });
 
-      this.totalPrice = totalPrice;
+      this.$store.dispatch('updateTotalPrice', totalPrice);
     },
     updateUpsellResultValue(array) {
       let upsellResult;
