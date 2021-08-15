@@ -20,6 +20,8 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 Vue.component('hello', require('./components/Hello.vue'));
 Vue.component('ice-upsell', require('./components/Ice.vue'));
 
+console.log(process.env.MIX_MESSAGE);
+
 const app = new Vue({
   el: "#app",
   store,
