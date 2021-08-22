@@ -1,7 +1,6 @@
 <template>
     <div class="ice__wrapper">
       <h3>かき氷</h3>
-      <!-- store: {{ demoProduct }} -->
       <hr>
       <ul class="ice__list">
         <li v-for="(kakigori, key) in kakigoriProducts" :key="key" class="ice__item">
@@ -37,10 +36,6 @@ export default {
   data() {
     return {
       selectedIceLists: [],
-      upsellResultValue: null,
-      upsellTests: [
-        `array.includes('ブルーハワイ') && array.includes('メロン')`,
-      ],
       upsellResultList: [
         'T01',
         'T02',
@@ -61,10 +56,6 @@ export default {
     Loading
   },
   mounted() {
-    // store demo
-    this.demoProduct = this.$store.state.products.demoProduct;
-    this.$store.dispatch('increment', 2);
-
     this.products = this.$store.state.products.products;
     this.kakigoriProducts = this.$store.state.products.kakigoriProducts;
   },
@@ -73,18 +64,18 @@ export default {
     selectedIceLists() {
       console.log('リストが更新されました');
 
+      // 選択商品リストの更新
       this.$store.dispatch('updateSelectedIceLists', this.selectedIceLists);
 
-      // 練習用
-      this.isIncludedBluehawaii = this.checkIncludeOneProduct(this.selectedIceLists, 'ブルーハワイ');
-
-      // 合計金額の更新
-      this.updateTotalPrice(this.selectedIceLists);
+      // 合計金額の更新 -> 処理はstoreへ
+      // この辺り、mappingできるのでは
+      this.$store.dispatch('updateTotalPrice');
 
       // アップセル結果の表示
-      this.updateUpsellResultValue(this.selectedIceLists);
+      this.showUpsellResult();
     },
     upsellResultValue() {
+      // @TODO: storeと組み合わせる
       this.runLoadingAnimation();
       this.goUpsellArea();
     }
@@ -93,44 +84,14 @@ export default {
     checkIncludeOneProduct(array, product) {
       return array.includes(product);
     },
-    updateTotalPrice() {
-      // @TODO: ここをstoreに移すところから
-      let totalPrice = 0;
+    async showUpsellResult() {
+      await this.$store.dispatch('updateUpsellResultValue', this.selectedIceLists);
+      const upsellResultValue = this.$store.state.upsell.upsellResultValue;
 
-      // this.selectedIceList と同値だけどstore管理する必要あるのか謎…。
-      const selectedIceList = this.$store.state.upsell.selectedIceList;
+      this.upsellResultObj = await this.$store.state.upsell.upsellResultObj;
 
-      // getters使った方が簡潔？
-      const kakigoriProducts = this.$store.state.products.kakigoriProducts;
-
-      selectedIceList.forEach(selectedIceKey => {
-        totalPrice += Number(kakigoriProducts[selectedIceKey].price);
-      });
-
-      this.$store.dispatch('updateTotalPrice', totalPrice);
-    },
-    updateUpsellResultValue(array) {
-      let upsellResult;
-      if (array.includes('ブルーハワイ') && array.includes('イチゴ')) {
-        upsellResult = 0;
-      } else if (array.includes('メロン') && array.includes('チョコレート')) {
-        upsellResult = 1;
-      } else if (array.includes('魅惑のレインボー')) {
-        upsellResult = 2;
-      } else if (array.length === 1) {
-        upsellResult = 3;
-      } else if (this.totalPrice <= 500 && this.totalPrice >= 1) {
-        upsellResult = 4;
-      } else if (this.totalPrice <= 1000 && this.totalPrice >= 501) {
-        upsellResult = 5;
-      }
-
-      this.upsellResultValue = upsellResult;
-
-      this.showUpsellResult();
-    },
-    showUpsellResult() {
-      this.upsellResultObj = this.products[this.upsellResultList[this.upsellResultValue]];
+      this.runLoadingAnimation();
+      this.goUpsellArea();
     },
     goUpsellArea() {
       this.$nextTick(() => {
