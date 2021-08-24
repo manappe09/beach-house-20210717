@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import { initProductsData } from '../mixins/initProductsData';
@@ -48,18 +49,17 @@ export default {
       isLoading: false,
       fullPage: true,
       demoProduct: '',
-      kakigoriProducts: {},
-      products: {},
     }
   },
   components: {
     Loading
   },
-  mounted() {
-    this.products = this.$store.state.products.products;
-    this.kakigoriProducts = this.$store.state.products.kakigoriProducts;
+  computed: {
+    ...mapState({
+      products: state => state.products.products,
+      kakigoriProducts: state => state.products.kakigoriProducts,
+    })
   },
-  computed: {},
   watch: {
     selectedIceLists() {
       console.log('リストが更新されました');
@@ -68,7 +68,6 @@ export default {
       this.$store.dispatch('updateSelectedIceLists', this.selectedIceLists);
 
       // 合計金額の更新 -> 処理はstoreへ
-      // この辺り、mappingできるのでは
       this.$store.dispatch('updateTotalPrice');
 
       // アップセル結果の表示
@@ -81,13 +80,9 @@ export default {
     }
   },
   methods: {
-    checkIncludeOneProduct(array, product) {
-      return array.includes(product);
-    },
     async showUpsellResult() {
+      // storeに選択された商品を送り、返す商品を計算した結果を取得
       await this.$store.dispatch('updateUpsellResultValue', this.selectedIceLists);
-      const upsellResultValue = this.$store.state.upsell.upsellResultValue;
-
       this.upsellResultObj = await this.$store.state.upsell.upsellResultObj;
 
       this.runLoadingAnimation();

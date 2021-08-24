@@ -38,8 +38,8 @@ const actions = {
     commit("updateSelectedIceLists", selectedIceLists);
   },
   updateTotalPrice({ commit }) {
-    const selectedIceLists = this.state.upsell.selectedIceList;
-    const products = this.state.products.products;
+    const selectedIceLists = [...this.state.upsell.selectedIceList];
+    const products = {...this.state.products.products};
     let totalPrice = 0;
 
     selectedIceLists.forEach((selectedIceKey) => {
@@ -79,6 +79,7 @@ const actions = {
 
     const upsellResultKey = upsellResultList[upsellResultValue];
     const upsellResultObj = products[upsellResultKey];
+    
     commit("updateUpsellResultObj", upsellResultObj);
   },
 };
