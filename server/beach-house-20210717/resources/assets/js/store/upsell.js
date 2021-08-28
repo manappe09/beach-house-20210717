@@ -16,7 +16,7 @@ const state = {
 const getters = {};
 
 const mutations = {
-  updateSelectedIceLists(state, selectedIceList) {
+  updateSelectedIceList(state, selectedIceList) {
     state.selectedIceList = selectedIceList;
   },
   updateTotalPrice(state, totalPrice) {
@@ -34,34 +34,34 @@ const mutations = {
 };
 
 const actions = {
-  updateSelectedIceLists({ commit }, selectedIceLists) {
-    commit("updateSelectedIceLists", selectedIceLists);
+  updateSelectedIceList({ commit }, selectedIceList) {
+    commit("updateSelectedIceList", selectedIceList);
   },
   updateTotalPrice({ commit }) {
-    const selectedIceLists = [...this.state.upsell.selectedIceList];
+    const selectedIceList = [...this.state.upsell.selectedIceList];
     const products = {...this.state.products.products};
     let totalPrice = 0;
 
-    selectedIceLists.forEach((selectedIceKey) => {
+    selectedIceList.forEach((selectedIceKey) => {
       totalPrice += Number(products[selectedIceKey].price);
     });
 
     commit("updateTotalPrice", totalPrice);
   },
-  updateUpsellResultValue({ dispatch, commit }, selectedIceLists) {
+  updateUpsellResultValue({ dispatch, commit }, selectedIceList) {
     let upsellResultValue;
     const totalPrice = this.state.upsell.totalPrice;
 
-    if (selectedIceLists.includes("K01") && selectedIceLists.includes("K02")) {
+    if (selectedIceList.includes("K01") && selectedIceList.includes("K02")) {
       upsellResultValue = 0;
     } else if (
-      selectedIceLists.includes("K03") &&
-      selectedIceLists.includes("K04")
+      selectedIceList.includes("K03") &&
+      selectedIceList.includes("K04")
     ) {
       upsellResultValue = 1;
-    } else if (selectedIceLists.includes("K05")) {
+    } else if (selectedIceList.includes("K05")) {
       upsellResultValue = 2;
-    } else if (selectedIceLists.length === 1) {
+    } else if (selectedIceList.length === 1) {
       upsellResultValue = 3;
     } else if (totalPrice <= 500 && totalPrice >= 1) {
       upsellResultValue = 4;

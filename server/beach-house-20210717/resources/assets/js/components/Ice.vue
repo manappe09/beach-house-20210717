@@ -6,7 +6,7 @@
         <li v-for="(kakigori, key) in kakigoriProducts" :key="key" class="ice__item">
           <!-- かき氷のみ表示 -->
             <img :src="`/images/${kakigori.image}`" alt="" width="120" height="120"><br>
-            <input :id="key" type="checkbox" :value="key" v-model="selectedIceLists">
+            <input :id="key" type="checkbox" :value="key" v-model="selectedIceList">
             <label :for="key">{{ kakigori.name }}</label>
             <p><small>{{ kakigori.text }}</small></p>
         </li>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import { initProductsData } from '../mixins/initProductsData';
@@ -36,19 +36,9 @@ export default {
   mixins: [initProductsData],
   data() {
     return {
-      selectedIceLists: [],
-      upsellResultList: [
-        'T01',
-        'T02',
-        'T03',
-        'G01',
-        'G02',
-        'G03',
-      ],
-      upsellResultObj: null,
+      selectedIceList: [],
       isLoading: false,
       fullPage: true,
-      demoProduct: '',
     }
   },
   components: {
@@ -58,32 +48,35 @@ export default {
     ...mapState({
       products: state => state.products.products,
       kakigoriProducts: state => state.products.kakigoriProducts,
-    })
+      upsellResultObj: state => state.upsell.upsellResultObj,
+    }),
   },
   watch: {
-    selectedIceLists() {
+    selectedIceList() {
       console.log('リストが更新されました');
 
       // 選択商品リストの更新
-      this.$store.dispatch('updateSelectedIceLists', this.selectedIceLists);
-
+      this.updateSelectedIceList(this.selectedIceList);
       // 合計金額の更新 -> 処理はstoreへ
-      this.$store.dispatch('updateTotalPrice');
+      this.updateTotalPrice();
 
       // アップセル結果の表示
       this.showUpsellResult();
     },
     upsellResultValue() {
-      // @TODO: storeと組み合わせる
       this.runLoadingAnimation();
       this.goUpsellArea();
     }
   },
   methods: {
+    ...mapActions([
+      'updateSelectedIceList',
+      'updateTotalPrice',
+      'updateUpsellResultValue',
+    ]),
     async showUpsellResult() {
       // storeに選択された商品を送り、返す商品を計算した結果を取得
-      await this.$store.dispatch('updateUpsellResultValue', this.selectedIceLists);
-      this.upsellResultObj = await this.$store.state.upsell.upsellResultObj;
+      await this.updateUpsellResultValue(this.selectedIceList);
 
       this.runLoadingAnimation();
       this.goUpsellArea();
