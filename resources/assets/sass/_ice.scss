@@ -1,0 +1,30 @@
+.ice__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+.ice__item {
+  width: 115px;
+  & + & {
+    margin-left: 2rem;
+  }
+  label {
+    user-select: none;
+    cursor: pointer;
+    transition: opacity .2s;
+    &:hover {
+      opacity: .5;
+    }
+  }
+}
+
+.ice__upsell {
+  img {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    object-fit: contain;
+  }
+}

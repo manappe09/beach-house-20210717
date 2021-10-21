@@ -1,0 +1,18 @@
+.main {
+  max-width: 1000px;
+  width: 100%;
+  margin: auto;
+}
+
+.contents_area {
+  display: flex;
+}
+
+.sidenav {
+  flex: 1;
+  margin-right: 2rem;
+}
+
+.contents {
+  flex: 3;
+}
