@@ -1,0 +1,1 @@
+web: vendor/bin/heroku-php-apache2 server/beach-house-20210717/public/
